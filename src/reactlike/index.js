@@ -18,14 +18,14 @@ function removeChildren(parent) {
 }
 
 // 挂载
-export function mount(vnode, container) {
+export function mount(RootComponent, container) {
   function process() {
     // 初始化状态计数
     initStates();
 
     // 删除所有子节点，然后挂载新视图
     removeChildren(container);
-    container.append(_render(h(vnode)));
+    container.append(_render(RootComponent()));
   }
 
   _mount(process);
