@@ -14,7 +14,7 @@ export function _update() {
 
 // vnode 渲染为 HTMLElement，实现 VDOM => DOM
 export function _render(vnode) {
-  // 如果 vnode.tag 是一个函数，vnode.tag 是 ComponentFactory；否则就是普通节点
+  // 如果 vnode.tag 是一个函数那么 vnode.tag 是 FunctionalComponent；否则就是普通节点
   const _vnode = (isFunction(vnode.tag) && vnode.tag(vnode.props)) || vnode;
 
   const el = document.createElement(_vnode.tag);
