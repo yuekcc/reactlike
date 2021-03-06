@@ -4,6 +4,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "baseUrl": ".",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "paths": {
       "@/*": ["./src/*"]
     }
