@@ -1,11 +1,11 @@
-import mitt from "mitt";
+import mitt from 'mitt';
 
-const isFunction = (x) => typeof x === "function";
+const isFunction = x => typeof x === 'function';
 
 // bus 是一个 EventEmitter
 // 这里用来实现重渲染
 const bus = mitt();
-const EVENT_UPDATE_VIEW = Symbol();
+const EVENT_UPDATE_VIEW = Symbol('event:update_view');
 
 // 触发 DOM 更新
 export function _update() {
@@ -20,9 +20,9 @@ export function _render(vnode) {
   const el = document.createElement(_vnode.tag);
 
   if (_vnode.props) {
-    Object.keys(_vnode.props).forEach((name) => {
+    Object.keys(_vnode.props).forEach(name => {
       // props 中的 key 如果是 on 开头，认为是事件 handler，否则是一般属性
-      if (name.startsWith("on")) {
+      if (name.startsWith('on')) {
         el[name] = _vnode.props[name];
       } else {
         el.setAttribute(name, _vnode.props[name]);
@@ -32,11 +32,11 @@ export function _render(vnode) {
 
   // 子节点是数组，递归处理
   if (Array.isArray(_vnode.children) && _vnode.children.length > 0) {
-    el.append(..._vnode.children.map((child) => _render(child)));
+    el.append(..._vnode.children.map(child => _render(child)));
   } else {
     // 非数组且非空时，append 到节点
     const text = `${_vnode.children}`;
-    if (text !== "") {
+    if (text !== '') {
       el.append(text);
     }
   }

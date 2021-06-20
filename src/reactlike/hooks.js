@@ -1,4 +1,4 @@
-import { _update } from "./render";
+import { _update } from './render';
 
 let _stateIndex = 0;
 
@@ -27,9 +27,9 @@ export function useState(initValue) {
 
   // 初始化或使用上次的值
   const val = (_states[_idx] = _states[_idx] || initValue);
-  
+
   // 更新 state
-  const setVal = (newValue) => {
+  const setVal = newValue => {
     _states[_idx] = newValue;
     _update();
   };

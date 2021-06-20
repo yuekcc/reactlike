@@ -1,5 +1,5 @@
-import { initStates } from "./hooks";
-import { _mount, _render } from "./render";
+import { initStates } from './hooks';
+import { _mount, _render } from './render';
 
 // 创建 vnode
 export function h(tag, props, children) {

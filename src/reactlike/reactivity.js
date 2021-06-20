@@ -4,6 +4,7 @@ class Dep {
   constructor() {
     this._subscribers = [];
   }
+
   depend() {
     if (_target && !this._subscribers.includes(_target)) {
       this._subscribers.push(_target);
@@ -11,7 +12,7 @@ class Dep {
   }
 
   notify() {
-    this._subscribers.forEach((sub) => sub());
+    this._subscribers.forEach(sub => sub());
   }
 }
 
@@ -49,7 +50,7 @@ const reactiveHandlers = {
     const _dep = getDepObj(target, key);
     const result = Reflect.set(target, key, value, receiver);
     _dep.notify();
-    
+
     return result;
   },
 };
