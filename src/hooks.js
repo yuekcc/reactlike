@@ -1,4 +1,4 @@
-import { _update } from './render';
+import { _forceUpdate } from './render';
 
 let _stateIndex = 0;
 
@@ -31,7 +31,7 @@ export function useState(initValue) {
   // 更新 state
   const setVal = newValue => {
     _states[_idx] = newValue;
-    _update();
+    _forceUpdate();
   };
 
   return [val, setVal];

@@ -1,19 +1,17 @@
-import mitt from 'mitt';
+import { initStates } from './hooks';
+import { Subject } from './subject';
 
 const isFunction = x => typeof x === 'function';
 
-// bus 是一个 EventEmitter
-// 这里用来实现重渲染
-const bus = mitt();
-const EVENT_UPDATE_VIEW = Symbol('event:update_view');
+const UPDATE_VIEW = new Subject();
 
 // 触发 DOM 更新
-export function _update() {
-  bus.emit(EVENT_UPDATE_VIEW);
+export function _forceUpdate() {
+  UPDATE_VIEW.next();
 }
 
 // vnode 渲染为 HTMLElement，实现 VDOM => DOM
-export function _render(vnode) {
+function _render(vnode) {
   // 如果 vnode.tag 是一个函数那么 vnode.tag 是 FunctionalComponent；否则就是普通节点
   const _vnode = (isFunction(vnode.tag) && vnode.tag(vnode.props)) || vnode;
 
@@ -44,10 +42,26 @@ export function _render(vnode) {
   return el;
 }
 
-// 挂载到 DOM 树
-export function _mount(process) {
-  bus.on(EVENT_UPDATE_VIEW, process);
+// 删除 DOM 节点下的所有子节点
+function removeChildren(parent) {
+  while (parent.lastChild) {
+    parent.removeChild(parent.lastChild);
+  }
+}
+
+// 挂载
+export function mount(RootComponent, container) {
+  function process() {
+    // 初始化状态计数
+    initStates();
+
+    // 删除所有子节点，然后挂载新视图
+    removeChildren(container);
+    container.append(_render(RootComponent()));
+  }
+
+  UPDATE_VIEW.subscript(process);
 
   // 第一次挂载手动触发一次 DOM 更新
-  _update();
+  _forceUpdate();
 }

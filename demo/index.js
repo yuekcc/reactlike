@@ -1,7 +1,5 @@
-import { h, mount } from './src/reactlike';
-import { useState } from './src/reactlike/hooks';
+import { h, mount, useState } from '@/reactlike';
 import { List } from './List';
-
 import './style.css';
 
 const Button = () => {

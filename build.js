@@ -1,9 +1,8 @@
 const { build } = require('esbuild');
 
 build({
-  entryPoints: ['main.js'],
-  outdir: 'dist',
-  jsxFactory: 'h',
+  entryPoints: ['src/index.js'],
+  outdir: 'lib/reactlike',
   target: 'chrome63',
   format: 'esm',
   bundle: true,

@@ -1,5 +1,5 @@
 // 导入 h 函数，用于 jsx 支持
-import { h } from './src/reactlike';
+import { h } from '@/reactlike';
 
 function Item(props) {
   return <button onclick={props.onclick}>{props.label}</button>;
