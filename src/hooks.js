@@ -1,16 +1,16 @@
-import { _forceUpdate } from './render';
+import { forceUpdate } from './render';
 
-let _stateIndex = 0;
+let _cacheIndex = 0;
 
 // 初始化状态计数
 export function initStates() {
-  _stateIndex = 0;
+  _cacheIndex = 0;
 }
 
 // 状态计数 +1
 // 每次调用 useXXX hook 时，计数 +1
 function _updateStateIndex() {
-  _stateIndex += 1;
+  _cacheIndex += 1;
 }
 
 // 缓存
@@ -23,15 +23,15 @@ export function useState(initValue) {
   _updateStateIndex();
 
   // 当前这个位置应该是 index - 1
-  const _idx = _stateIndex - 1;
+  const pos = _cacheIndex - 1;
 
   // 初始化或使用上次的值
-  const val = (_states[_idx] = _states[_idx] || initValue);
+  const val = (_states[pos] = _states[pos] || initValue);
 
   // 更新 state
   const setVal = newValue => {
-    _states[_idx] = newValue;
-    _forceUpdate();
+    _states[pos] = newValue;
+    forceUpdate();
   };
 
   return [val, setVal];

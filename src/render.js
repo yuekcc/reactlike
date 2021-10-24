@@ -6,12 +6,12 @@ const isFunction = x => typeof x === 'function';
 const UPDATE_VIEW = new Subject();
 
 // 触发 DOM 更新
-export function _forceUpdate() {
+export function forceUpdate() {
   UPDATE_VIEW.next();
 }
 
 // vnode 渲染为 HTMLElement，实现 VDOM => DOM
-function _render(vnode) {
+function render(vnode) {
   // 如果 vnode.tag 是一个函数那么 vnode.tag 是 FunctionalComponent；否则就是普通节点
   const _vnode = (isFunction(vnode.tag) && vnode.tag(vnode.props)) || vnode;
 
@@ -30,13 +30,13 @@ function _render(vnode) {
 
   // 子节点是数组，递归处理
   if (Array.isArray(_vnode.children) && _vnode.children.length > 0) {
-    el.append(..._vnode.children.map(child => _render(child)));
-  } else {
-    // 非数组且非空时，append 到节点
-    const text = `${_vnode.children}`;
-    if (text !== '') {
-      el.append(text);
-    }
+    el.append(..._vnode.children.map(child => render(child)));
+  }
+
+  // 非数组但非空白时，append 到节点
+  const text = `${_vnode.children || ''}`.trim();
+  if (text !== '') {
+    el.append(text);
   }
 
   return el;
@@ -55,13 +55,13 @@ export function mount(RootComponent, container) {
     // 初始化状态计数
     initStates();
 
-    // 删除所有子节点，然后挂载新视图
+    // 最简单的方式实现更新视图：删除所有子节点，然后挂载新视图
     removeChildren(container);
-    container.append(_render(RootComponent()));
+    container.append(render(RootComponent()));
   }
 
   UPDATE_VIEW.subscript(process);
 
   // 第一次挂载手动触发一次 DOM 更新
-  _forceUpdate();
+  forceUpdate();
 }

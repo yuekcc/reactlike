@@ -9,7 +9,9 @@ export class Subject {
     }
   }
 
-  async next(data) {
-    this._subscribers.forEach(listener => listener(data));
+  next(data) {
+    Promise.resolve().then(() => {
+      this._subscribers.forEach(listener => listener(data));
+    });
   }
 }
