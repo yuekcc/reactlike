@@ -1,28 +1,31 @@
 # react like
 
-一个 react 劣质版。
+一个 react like MVP。
 
 已实现功能：
 
 - 函数组件
-    - `h(tag, props, children)` 生成 vnode
-    - `mount(FunctionalComponent, container)` 将组件挂载到 DOM
-- hooks
-    - `const [val, setVal] = useState(initValue)` 手感类似于 react 的 [state hook][1]
-- JSX 支持
-    - 配置构建工具的 [jsxFactory][2] 为 h，可以支持 JSX
+- jsx 支持（h 函数）
+- useState hooks
 
+API:
+
+- `mount(RootComponent, htmlElement)` 将组件挂载到 DOM
+- `h(tag, props, children)` h 函数，通过构建工具（需要配置 [jsxFactory][2]）也可以支持 jsx
+- `const [val, setVal] = useState(initVal)` [state hook][1]
 
 ## 体验
 
 ```sh
 $ npm i
-$ npm run dev # then open to http://localhost:3000
+$ npm run build:lib
+$ npm run build:demo
+$ npm run serve
 ```
 
 ## LICENSE
 
 [WTFPL](LICENSE)
 
-[1]: https://reactjs.bootcss.com/docs/hooks-state.html
-[2]: https://vitejs.dev/guide/features.html#vue
+[1]: https://reactjs.org/docs/hooks-state.html
+[2]: https://esbuild.github.io/api/#jsx-factory
